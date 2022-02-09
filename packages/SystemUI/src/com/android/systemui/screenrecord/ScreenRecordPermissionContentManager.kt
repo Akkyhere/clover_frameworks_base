@@ -109,6 +109,7 @@ class ScreenRecordPermissionContentManager(
     private lateinit var audioSwitch: Switch
     private lateinit var lowQualitySwitch: Switch
     private lateinit var longerDurationSwitch: Switch
+    private lateinit var skipTimeSwitch: Switch
     private lateinit var hevcSwitch: Switch
     private lateinit var tapsView: View
     private lateinit var options: Spinner
@@ -158,6 +159,7 @@ class ScreenRecordPermissionContentManager(
         tapsSwitch = containerView.requireViewById(R.id.screenrecord_taps_switch)
         lowQualitySwitch = containerView.requireViewById(R.id.screenrecord_lowquality_switch)
         longerDurationSwitch = containerView.requireViewById(R.id.screenrecord_longer_timeout_switch)
+        skipTimeSwitch = containerView.requireViewById(R.id.screenrecord_skip_time_switch)
         hevcSwitch = containerView.requireViewById(R.id.screenrecord_hevc_switch)
 
         tapsView = containerView.requireViewById(R.id.show_taps)
@@ -169,6 +171,7 @@ class ScreenRecordPermissionContentManager(
         tapsSwitch.setOnTouchListener { _, event -> event.action == ACTION_MOVE }
         lowQualitySwitch.setOnTouchListener { _, event -> event.action == ACTION_MOVE }
         longerDurationSwitch.setOnTouchListener { _, event -> event.action == ACTION_MOVE }
+        skipTimeSwitch.setOnTouchListener { _, event -> event.action == ACTION_MOVE }
         hevcSwitch.setOnTouchListener { _, event -> event.action == ACTION_MOVE }
 
         options = containerView.requireViewById(R.id.screen_recording_options)
@@ -226,10 +229,12 @@ class ScreenRecordPermissionContentManager(
 
         val lowQuality = lowQualitySwitch.isChecked
         val longerDuration = longerDurationSwitch.isChecked
+        val longerDuration = longerDurationSwitch.isChecked
         val hevc = hevcSwitch.isChecked
+        val skipTime = skipTimeSwitch.isChecked
 
         controller.startCountdown(
-            DELAY_MS,
+            if (skipTime) NO_DELAY else DELAY_MS,
             INTERVAL_MS,
             {
                 screenRecordingStartStopInteractor.startRecording(
@@ -245,7 +250,7 @@ class ScreenRecordPermissionContentManager(
                 )
             },
             { screenRecordingStartStopInteractor.stopRecording(StopReason.STOP_UNKNOWN) },
-       )
+        )
     }
 
     private inner class CaptureTargetResultReceiver :
@@ -273,6 +278,7 @@ class ScreenRecordPermissionContentManager(
             )
 
         private const val DELAY_MS: Long = 3000
+        private const val NO_DELAY: Long = 100
         private const val INTERVAL_MS: Long = 1000
 
         fun createOptionList(displayManager: DisplayManager): List<ScreenShareOption> {
