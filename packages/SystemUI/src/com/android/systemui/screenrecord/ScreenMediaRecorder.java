@@ -190,7 +190,8 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         mMediaRecorder.setVideoFrameRate(refreshRate);
         mMediaRecorder.setVideoEncodingBitRate(vidBitRate);
         mMediaRecorder.setMaxDuration(mLongerDuration ? 0 : MAX_DURATION_MS);
-        mMediaRecorder.setMaxFileSize(maxFilesize);
+        mMediaRecorder.setMaxFileSize(
+        mLongerDuration ? MAX_FILESIZE_BYTES_LONGER : MAX_FILESIZE_BYTES);
 
         // Set up audio
         if (mAudioSource == MIC) {
