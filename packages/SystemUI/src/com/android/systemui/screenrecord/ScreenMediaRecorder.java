@@ -179,7 +179,7 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         mMediaRecorder.setVideoEncodingProfileLevel(
                 MediaCodecInfo.CodecProfileLevel.AVCProfileHigh,
                 mLowQuality ? MediaCodecInfo.CodecProfileLevel.AVCLevel32
-                : getAvcProfileLevelCodeByName(mAvcProfileLevel));
+                : MediaCodecInfo.CodecProfileLevel.AVCLevel3);
         mMediaRecorder.setVideoSize(width, height);
         mMediaRecorder.setVideoFrameRate(refreshRate);
         mMediaRecorder.setVideoEncodingBitRate(vidBitRate);

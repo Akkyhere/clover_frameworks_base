@@ -217,30 +217,23 @@ class ScreenRecordPermissionContentManager(
         val audioMode =
             if (audioSwitch.isChecked) options.selectedItem as ScreenRecordingAudioSource
             else ScreenRecordingAudioSource.NONE
+
         val lowQuality = lowQualitySwitch.isChecked
-        val startIntent =
-            PendingIntent.getForegroundService(
-                userContext,
-                RecordingService.REQUEST_CODE,
-                RecordingService.getStartIntent(
-                    userContext,
-                    Activity.RESULT_OK,
-                    audioMode.ordinal,
-                    showTaps,
-                    displayId,
-                    captureTarget,
-                    lowQuality,
-                ),
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-            )
-        val stopIntent =
-            PendingIntent.getService(
-                userContext,
-                RecordingService.REQUEST_CODE,
-                RecordingService.getStopIntent(userContext),
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-            )
-        controller.startCountdown(DELAY_MS, INTERVAL_MS, startIntent, stopIntent)
+        controller.startCountdown(
+            DELAY_MS,
+            INTERVAL_MS,
+            {
+                screenRecordingStartStopInteractor.startRecording(
+                    ScreenRecordingParameters(
+                        captureTarget = captureTarget,
+                        audioSource = audioMode,
+                        displayId = displayId,
+                        shouldShowTaps = showTaps,
+                    )
+                )
+            },
+            { screenRecordingStartStopInteractor.stopRecording(StopReason.STOP_UNKNOWN) },
+        )
     }
 
     private inner class CaptureTargetResultReceiver :
