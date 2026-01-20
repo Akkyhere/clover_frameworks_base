@@ -74,6 +74,7 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
     private static final int TOTAL_NUM_TRACKS = 1;
     private static final int VIDEO_FRAME_RATE = 30;
     private static final int VIDEO_FRAME_RATE_TO_RESOLUTION_RATIO = 6;
+    private static final int LOW_VIDEO_FRAME_RATE_TO_RESOLUTION_RATIO = 5;
     private static final int LOW_VIDEO_FRAME_RATE = 25;
     private static final int LOW_VIDEO_BIT_RATE = 1750000;
     private static final int AUDIO_BIT_RATE = 196000;
