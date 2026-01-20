@@ -229,7 +229,6 @@ class ScreenRecordPermissionContentManager(
 
         val lowQuality = lowQualitySwitch.isChecked
         val longerDuration = longerDurationSwitch.isChecked
-        val longerDuration = longerDurationSwitch.isChecked
         val hevc = hevcSwitch.isChecked
         val skipTime = skipTimeSwitch.isChecked
 
