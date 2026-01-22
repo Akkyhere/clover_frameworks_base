@@ -564,3 +564,6 @@ non_updatable_exportable_droidstubs {
         "framework-annotations-lib",
     ],
 }
+subdirs = [
+    "freeform",
+]

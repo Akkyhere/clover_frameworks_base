@@ -133,3 +133,9 @@
 # CoverageService guards optional jacoco class references with a runtime guard, so we can safely
 # suppress build-time warnings.
 -dontwarn org.jacoco.agent.rt.*
+
+# ---- LMOFreeform keep rules ----
+-keep class com.android.server.display.FreeformService { *; }
+-keep class com.libremobileos.freeform.server.** { *; }
+-keep class com.libremobileos.freeform.** { *; }
+-dontwarn com.libremobileos.freeform.**
